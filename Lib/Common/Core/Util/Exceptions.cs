@@ -91,7 +91,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
             };
         }
 
-#if WINDOWS_DESKTOP
+#if WINDOWS_DESKTOP || XAMARIN
         internal static StorageException GenerateCancellationException(RequestResult res, Exception inner)
         {
             if (res != null)

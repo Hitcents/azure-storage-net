@@ -263,7 +263,7 @@ namespace Microsoft.WindowsAzure.Storage.File
             storageAsyncResult.End();
         }
 
-#if WINDOWS_PHONE
+#if WINDOWS_PHONE && !XAMARIN
         /// <summary>
         /// Returns a task that performs an asynchronous flush operation.
         /// </summary>

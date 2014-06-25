@@ -277,7 +277,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             storageAsyncResult.End();
         }
 
-#if WINDOWS_PHONE
+#if WINDOWS_PHONE && !XAMARIN
         /// <summary>
         /// Initiates an asynchronous operation that performs an asynchronous flush operation.
         /// </summary>

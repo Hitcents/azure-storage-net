@@ -23,7 +23,7 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
 
     internal static class Response
     {
-#if WINDOWS_DESKTOP
+#if WINDOWS_DESKTOP || XAMARIN
         /// <summary>
         /// Gets the request id.
         /// </summary>

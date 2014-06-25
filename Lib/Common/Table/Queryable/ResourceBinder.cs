@@ -905,7 +905,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.Queryable
                 {
                     return false;
                 }
-#if WINDOWS_DESKTOP
+#if WINDOWS_DESKTOP || XAMARIN
                 return call.Method == typeof(object).GetMethod("ReferenceEquals");
 #elif WINDOWS_RT
                 return call.Method == typeof(object).GetRuntimeMethod("ReferenceEquals", new Type[]{});

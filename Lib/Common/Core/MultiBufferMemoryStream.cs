@@ -175,7 +175,7 @@ namespace Microsoft.WindowsAzure.Storage.Core
             return this.ReadInternal(buffer, offset, count);
         }
 
-#if WINDOWS_DESKTOP
+#if WINDOWS_DESKTOP || XAMARIN
         /// <summary>
         /// Begins an asynchronous read operation.
         /// </summary>
@@ -305,7 +305,7 @@ namespace Microsoft.WindowsAzure.Storage.Core
             this.length = Math.Max(this.length, this.position);
         }
 
-#if WINDOWS_DESKTOP
+#if WINDOWS_DESKTOP || XAMARIN
         /// <summary>
         /// Begins an asynchronous write operation.
         /// </summary>
@@ -381,7 +381,7 @@ namespace Microsoft.WindowsAzure.Storage.Core
         }
 #endif
 
-#if WINDOWS_DESKTOP
+#if WINDOWS_DESKTOP || XAMARIN
         /// <summary>
         /// Reads the bytes from the current stream and writes them to another stream. This method writes directly to the destination stream, 
         /// rather than copying the data into a temporary buffer.

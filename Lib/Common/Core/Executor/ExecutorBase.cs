@@ -178,7 +178,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
             return false;
         }
 
-#if WINDOWS_DESKTOP
+#if WINDOWS_DESKTOP || XAMARIN
         protected static bool CheckCancellation<T>(ExecutionState<T> executionState)
         {
             lock (executionState.CancellationLockerObject)

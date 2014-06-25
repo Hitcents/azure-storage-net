@@ -341,7 +341,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
             }
         }
 
-#elif WINDOWS_DESKTOP
+#elif WINDOWS_DESKTOP || XAMARIN
         /// <summary>
         /// Asynchronously reads the entire content of the stream and writes it to the given output stream.
         /// </summary>

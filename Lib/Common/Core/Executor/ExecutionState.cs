@@ -61,7 +61,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
 #endif
         }
 
-#if WINDOWS_DESKTOP
+#if WINDOWS_DESKTOP || XAMARIN
         public ExecutionState(StorageCommandBase<T> cmd, IRetryPolicy policy, OperationContext operationContext, AsyncCallback callback, object asyncState)
             : base(callback, asyncState)
         {
