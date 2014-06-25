@@ -19,7 +19,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;WINDOWS_PHONE;ANDROID;XAMARIN;</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;WINDOWS_PHONE;ANDROID;XAMARIN;SYNC;TASK;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -27,7 +27,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;WINDOWS_PHONE;ANDROID;XAMARIN;</DefineConstants>
+    <DefineConstants>TRACE;WINDOWS_PHONE;ANDROID;XAMARIN;SYNC;TASK;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>

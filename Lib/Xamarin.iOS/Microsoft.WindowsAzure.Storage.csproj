@@ -17,7 +17,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\iPhone\Debug</OutputPath>
-    <DefineConstants>DEBUG;WINDOWS_PHONE;XAMARIN;IOS;</DefineConstants>
+    <DefineConstants>DEBUG;WINDOWS_PHONE;XAMARIN;IOS;SYNC;TASK;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
@@ -32,7 +32,7 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <CodesignKey>iPhone Developer</CodesignKey>
-    <DefineConstants>WINDOWS_PHONE;XAMARIN;IOS;</DefineConstants>
+    <DefineConstants>WINDOWS_PHONE;XAMARIN;IOS;SYNC;TASK;</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\classlibrarycommon\analytics\CapacityEntity.cs">
