@@ -52,7 +52,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// </summary>
         /// <param name="storageUri">A <see cref="StorageUri"/> object containing the Table service endpoint to use to create the client.</param>
         /// <param name="credentials">A <see cref="StorageCredentials"/> object.</param>
-#if WINDOWS_RT
+#if WINDOWS_RT || ASPNET_K
         /// <returns>A <see cref="CloudTableClient"/> object.</returns>
         public static CloudTableClient Create(StorageUri storageUri, StorageCredentials credentials)
         {
@@ -69,7 +69,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
             this.DefaultRequestOptions = new TableRequestOptions();
             this.DefaultRequestOptions.RetryPolicy = new ExponentialRetry();
             this.DefaultRequestOptions.LocationMode = RetryPolicies.LocationMode.PrimaryOnly;
-#if WINDOWS_DESKTOP || WINDOWS_PHONE
+#if !WINDOWS_RT
             this.DefaultRequestOptions.PayloadFormat = TablePayloadFormat.Json;
 #else
             this.DefaultRequestOptions.PayloadFormat = TablePayloadFormat.AtomPub;

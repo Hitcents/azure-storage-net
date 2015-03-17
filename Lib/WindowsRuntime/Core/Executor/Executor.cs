@@ -62,8 +62,9 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                 bool shouldRetry = false;
                 TimeSpan delay = TimeSpan.Zero;
 
+                // Note - The service accepts both api-version and x-ms-version and therefore it is ok to add x-ms-version to all requests.
                 // Create a new client
-                HttpClient client = cmd.BuildClient(cmd, cmd.Handler, !cmd.Credentials.IsSAS, executionState.OperationContext);
+                HttpClient client = cmd.BuildClient(cmd, cmd.Handler, true, executionState.OperationContext);
                 client.Timeout = TimeSpan.FromMilliseconds(int.MaxValue);
 
                 do
@@ -172,7 +173,11 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                                 cmd.ErrorStream = new MemoryStream();
                                 await cmd.ResponseStream.WriteToAsync(cmd.ErrorStream, null /* copyLength */, null /* maxLength */, false, executionState, new StreamDescriptor(), token);
                                 cmd.ErrorStream.Seek(0, SeekOrigin.Begin);
+#if ASPNET_K
+                                executionState.ExceptionRef = StorageException.TranslateExceptionWithPreBufferedStream(executionState.ExceptionRef, executionState.Cmd.CurrentResult, null /* parseError */, cmd.ErrorStream, executionState.Resp);
+#else
                                 executionState.ExceptionRef = StorageException.TranslateExceptionWithPreBufferedStream(executionState.ExceptionRef, executionState.Cmd.CurrentResult, null /* parseError */, cmd.ErrorStream);
+#endif
                                 throw executionState.ExceptionRef;
                             }
                             finally
@@ -236,7 +241,11 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                             e = new TimeoutException(SR.TimeoutExceptionMessage, e);
                         }
 
+#if ASPNET_K
+                        StorageException translatedException = StorageException.TranslateException(e, executionState.Cmd.CurrentResult, null, executionState.Resp);
+#else
                         StorageException translatedException = StorageException.TranslateException(e, executionState.Cmd.CurrentResult, null);
+#endif
                         executionState.ExceptionRef = translatedException;
                         Logger.LogInformational(executionState.OperationContext, SR.TraceRetryCheck, executionState.RetryCount, executionState.Cmd.CurrentResult.HttpStatusCode, translatedException.IsRetryable ? "yes" : "no", translatedException.Message);
 
@@ -294,7 +303,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                     if (!shouldRetry || (executionState.OperationExpiryTime.HasValue && (DateTime.Now + delay).CompareTo(executionState.OperationExpiryTime.Value) > 0))
                     {
                         Logger.LogError(executionState.OperationContext, shouldRetry ? SR.TraceRetryDecisionTimeout : SR.TraceRetryDecisionPolicy, executionState.ExceptionRef.Message);
-#if WINDOWS_RT
+#if WINDOWS_RT || ASPNET_K
                         // Need to throw wrapped Exception with message as serialized exception info stuff. 
                         int hResult = WrappedStorageException.GenerateHResult(executionState.ExceptionRef, executionState.Cmd.CurrentResult);
                         throw new WrappedStorageException(executionState.Cmd.CurrentResult.WriteAsXml(), executionState.ExceptionRef, hResult);

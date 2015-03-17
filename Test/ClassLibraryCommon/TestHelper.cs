@@ -52,7 +52,7 @@ namespace Microsoft.WindowsAzure.Storage
                 return;
             }
 
-            Assert.Fail("No Storage exception received while while expecting {0}: {1}", expectedStatusCode, operationDescription);
+            Assert.Fail("No Storage exception received while expecting {0}: {1}", expectedStatusCode, operationDescription);
         }
 
 #if TASK
@@ -73,7 +73,7 @@ namespace Microsoft.WindowsAzure.Storage
                 e = e.Flatten();
                 if (e.InnerExceptions.Count > 1)
                 {
-                    Assert.Fail("Multiple exception received while while expecting {0}: {1}", expectedStatusCode, operationDescription);
+                    Assert.Fail("Multiple exception received while expecting {0}: {1}", expectedStatusCode, operationDescription);
                 }
 
                 StorageException ex = e.InnerException as StorageException;
@@ -91,11 +91,11 @@ namespace Microsoft.WindowsAzure.Storage
                 return;
             }
 
-            Assert.Fail("No exception received while while expecting {0}: {1}", expectedStatusCode, operationDescription);
+            Assert.Fail("No exception received while expecting {0}: {1}", expectedStatusCode, operationDescription);
         }
 #endif
 
-#if !WINDOWS_PHONE
+#if WINDOWS_DESKTOP && !WINDOWS_PHONE
         internal static void ExecuteAPMMethodWithCancellation(int cancellationDelayInMS,
           ProxyBehavior[] behaviors,
           Func<IRequestOptions,

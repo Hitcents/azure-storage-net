@@ -78,7 +78,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="blobAbsoluteUri">A <see cref="StorageUri"/> containing the absolute URI to the blob at both the primary and secondary locations.</param>
         /// <param name="snapshotTime">A <see cref="DateTimeOffset"/> specifying the snapshot timestamp, if the blob is a snapshot.</param>
         /// <param name="credentials">A <see cref="StorageCredentials"/> object.</param>
-#if WINDOWS_RT
+#if WINDOWS_RT || ASPNET_K
         /// <returns>A <see cref="CloudBlockBlob"/> object.</returns>
         public static CloudBlockBlob Create(StorageUri blobAbsoluteUri, DateTimeOffset? snapshotTime, StorageCredentials credentials)
         {
@@ -446,14 +446,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         {
             if (!this.ServiceClient.Credentials.IsSharedKey)
             {
-                string errorMessage = string.Format(CultureInfo.CurrentCulture, SR.CannotCreateSASWithoutAccountKey);
+                string errorMessage = string.Format(CultureInfo.InvariantCulture, SR.CannotCreateSASWithoutAccountKey);
                 throw new InvalidOperationException(errorMessage);
-            }
-
-            if (this.SnapshotTime != null)
-            {
-                string errorMessage = string.Format(CultureInfo.CurrentCulture, SR.CannotCreateSASForSnapshot);
-                throw new NotSupportedException(errorMessage);
             }
 
             string resourceName = this.GetCanonicalName(true);
@@ -521,7 +515,11 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 this.SnapshotTime = parsedSnapshot;
             }
 
-            this.ServiceClient = new CloudBlobClient(NavigationHelper.GetServiceClientBaseAddress(this.StorageUri, null /* usePathStyleUris */), credentials ?? parsedCredentials);
+            if (this.ServiceClient == null)
+            {
+                this.ServiceClient = new CloudBlobClient(NavigationHelper.GetServiceClientBaseAddress(this.StorageUri, null /* usePathStyleUris */), credentials ?? parsedCredentials);
+            }
+            
             this.Name = NavigationHelper.GetBlobName(this.Uri, this.ServiceClient.UsePathStyleUris);
         }
     }

@@ -110,9 +110,13 @@ UpgradeLog*.XML
 
 # NuGet
 AppPackages/
+Packages/
 
 # Test Results
 TestResults/
 
 # Mac development
 .DS_Store
+
+#VS14 sln.ide files
+*.sln.ide/
